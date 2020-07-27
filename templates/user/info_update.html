@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>修改个人信息</title>
+    <style>
+        .submit{
+            background-color: green;
+            border: none;
+            border-radius: 10%;
+            width: 50px;
+            color: white;
+            margin-left: 200px;
+        }
+        .msg{
+            text-align: center;
+            color: red;
+            font-size: 10px;
+        }
+    </style>
+    <link rel="stylesheet" href="../../static/css/mr-01.css" type="text/css">
+</head>
+<body>
+    <div id="mr-mainbody" class="container mr-mainbody">
+		<div class="row">
+			<!-- 主体内容 -->
+			<div id="mr-content" class="mr-content col-xs-12">
+				<div class="login-wrap" style="margin-bottom: 60px; margin-top: 50px">
+					<div style="max-width: 540px; margin: 0 auto;">
+						<a href="index.html" title="点击返回首页"><img src="../../static/image/51logo.png"></a>
+					</div>
+					<div class="login">
+						<div class="page-header" style="pause: 0px;"> <h1 class="login_h1">修改用户信息</h1> </div>
+						    {% for msg in get_flashed_messages() %}
+                                <p class="msg">{{ msg }}</p>
+                            {% endfor %}
+						<!-- 会员登录表单 -->
+						<form action="" method="post" class="form-horizontal">
+							<fieldset>
+								<div class="form-group">
+									<div class="col-sm-4 control-label">
+										<label id="username-lbl" for="username" class="required">账户 ：</label>
+									</div>
+									<div class="col-sm-8">
+										<!-- 账户文本框 -->
+                                        {{ current_user.username }}
+									</div>
+								</div>
+								<div class="form-group">
+									<div class="col-sm-4 control-label">
+										<label id="password" for="password" class="required">昵称 ：</label>
+									</div>
+									<div class="col-sm-8">
+										<!-- 密码文本框 -->
+										<input type="text" name="name" placeholder="昵称" value="{{ current_user.name }}">
+									</div>
+								</div>
+								<div class="form-group">
+									<div class="col-sm-4 control-label">
+										<label id="password-lbl" for="password" class="required">验证码 ：</label>
+									</div>
+									<div class="col-sm-8" style="clear: none;">
+										<!-- 验证码文本框 -->
+										<input type="text" name="code" placeholder="输入验证码"><br>
+											<!-- 显示验证码 -->
+											<img  src="/login/code " onclick="this.src='/login/code?'+ Math.random()"><br>
+									</div>
+								</div>
+								<div class="form-group">
+									<div class="col-sm-offset-4 col-sm-8">
+										 <input type="submit" value="修改" class="submit">
+									</div>
+								</div>
+								<div class="form-group"
+									style="border-top: 1px solid #D9D9D9; margin: 20px;">
+
+								</div>
+							</fieldset>
+						</form>
+					</div>
+				</div>
+			</div>
+			<!-- //主体内容 -->
+		</div>
+	</div>
+</body>
+</html>

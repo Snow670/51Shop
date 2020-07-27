@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>收货地址管理</title>
+    <link rel='stylesheet' href='https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css'>
+{#    <script src="//tjs.sjs.sinajs.cn/open/api/js/wb.js?appkey=" type="text/javascript" charset="utf-8"></script>#}
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+            text-align: center;
+            text-decoration: none;
+        }
+        input{
+            height: 30px;
+            margin-top: 20px;
+        }
+        body{
+            background-color: black;
+        }
+        .address_div{
+            border: 1px solid black;
+            margin: 100px auto;
+            width: 400px;
+            height: 400px;
+            background: white;
+        }
+        .submit{
+            background-color: green;
+            border: none;
+            border-radius: 10%;
+            width: 50px;
+            color: white;
+        }
+        .add_address{
+            float: left;
+            background-color: darkturquoise;
+            width: 300px;
+            min-height: 300px;
+            padding: 30px;
+        }
+        li{
+            text-align: left;
+            padding-left: 100px;
+            padding-top: 10px;
+        }
+    </style>
+</head>
+<body>
+<div class="add_address">
+    <h2>添加收货地址</h2>
+    <form action="" method="post">
+        收货人名字 <input type="text" name="name" placeholder="收货人名字"><br>
+        收货人手机号 <input type="text" name="phone" placeholder="收货人手机号"><br>
+        收货人地址 <input type="text" name="sit" placeholder="收货人地址"><br>
+        <input type="submit" value="添加" class="submit">
+    </form>
+</div>
+<div class="address_div">
+    <h1>我的收货地址</h1>
+    <h3><a href="{{ url_for('car.add_site') }}">返回添加物流信息</a></h3>
+    <ul>
+        {% for address in address_all %}
+        <li>
+            收货地址: {{ address.site }}<br>
+            收货人: {{ address.name }}<br>
+            收货人电话:{{ address.phone }}<br>
+            <a href="?del={{ address.id }}">删除这个收货地址</a>
+        </li>
+        {% endfor %}
+    </ul>
+
+    {% for msg in get_flashed_messages() %}
+        {{ msg }}
+    {% endfor %}
+</div>
+
+
+</body>
+</html>

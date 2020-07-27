@@ -1,0 +1,166 @@
+{% extends "home/common.html" %}
+{% block content %}
+	<!-- //网站头部 -->
+    <div id="mr-mainbody" class="container mr-mainbody">
+        <div class="row">
+            <!-- 页面主体内容 -->
+            <div id="mr-content" class="mr-content col-xs-12">
+                <div id="mrshop" class="mrshop common-home">
+                    <div class="container_oc">
+                        <div class="row">
+                            <div  class="col-sm-12">
+                                <h1>我的购物车</h1>
+                                <!-- 显示购物车中的商品 -->
+                                <div class="table-responsive cart-info">
+                                    <table class="table table-bordered">
+                                        <thead>
+                                            <tr>
+                                                <td class="text-center image">商品图片</td>
+                                                <td class="text-left name">商品名称</td>
+                                                <td class="text-left quantity">数量</td>
+                                                <td class="text-right price">单价</td>
+                                                <td class="text-right">总计</td>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                        <!-- 遍历购物车中的商品并显示 -->
+                                            {% for item in car %}
+                                             <tr>
+                                                <td class="text-center image" width="20%">
+{#                                                    <a href="{{url_for('home.goods_detail',id=item.goods.id)}}">#}
+                                                    <img width="80px" src="{{url_for('static',filename='images/goods/'+ item.car_good.img)}}"> </a>
+                                                </td>
+                                                <td class="text-left name">
+                                                    <a href=" ">{{item.car_good.name}}</a>
+                                                </td>
+                                                <td class="text-left quantity">{{item.good_num}}件</td>
+                                                <td class="text-right price">{{item.car_good.price}}元</td>
+                                                <td class="text-right total">
+                                                    {{item.all_price}}元
+                                                </td>
+                                            </tr>
+                                            {% endfor %}
+                                            <!-- //遍历购物车中的商品并显示 -->
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <!-- //显示购物车中的商品 -->
+                                <!-- 显示总计金额  -->
+                                <div class="row cart-total">
+                                    <div class="col-sm-4 col-sm-offset-8">
+                                        <table class="table table-bordered">
+                                            <tbody>
+                                                <tr >
+                                                <span>
+                                                    <strong>总计:</strong>
+                                                    <span>{{ total }}元</span>
+                                                </span>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                                <!-- //显示总计金额  -->
+                            </div>
+                        </div>
+                        <!-- 填写物流信息 -->
+                        <div class="row">
+                            <div id="content_oc" class="col-sm-12">
+                                <h1> <a href="{{ url_for('car.add_site') }}">添加物流信息</a></h1>
+                                <!-- 填写物流信息的表单 -->
+
+
+                                    <div class="table-responsive cart-info">
+                                        <table class="table table-bordered">
+                                            <tbody>
+                                                <tr>
+                                                    <td class="text-right" width="20%">收货人姓名：</td>
+                                                    <td class="text-left quantity">
+                                                        <div class="input-group btn-block" style="max-width: 400px;">
+                                                            {{ site.name }}
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="text-right">收货人手机：</td>
+                                                    <td class="text-left quantity">
+                                                        <div class="input-group btn-block" style="max-width: 400px;">
+                                                            {{ site.phone }}
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="text-right">收货人地址：</td>
+                                                    <td class="text-left quantity">
+                                                        <div class="input-group btn-block" style="max-width: 400px;">
+                                                            {{ site.site }}
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+
+
+                                <!-- //填写物流信息的表单 -->
+                            </div>
+                        </div>
+                        <!-- //填写物流信息 -->
+                        <br />
+                        <!-- 显示支付方式 -->
+                        <div class="row">
+                                <h1>支付方式</h1>
+                                <div class="table-responsive cart-info">
+                                    <table class="table table-bordered">
+                                        <tbody>
+                                            <tr>
+                                                <td class="text-left"><img src="{{url_for('static',filename='home/images/zhifubao.png')}}" /></td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <br /> <br />
+                                <div class="buttons">
+                                    <div class="pull-left">
+                                        <a href="{{url_for('index')}}" class="btn btn-primary btn-default">继续购物</a>
+                                    </div>
+                                    <div class="pull-left">
+                                        <a href="{{url_for('car.delete')}}" class="btn btn-primary btn-default">清空购物车</a>
+                                    </div>
+                                    <div class="pull-right">
+                                        <button id="btn-pay" class="btn btn-primary btn-default">立即购买</button>
+                                    </div>
+                                </div>
+
+                        </div>
+                        <!-- //显示支付方式 -->
+                    </div>
+                </div>
+            </div>
+            <!-- //页面主体内容 -->
+        </div>
+    </div>
+<script src="http://code.jquery.com/jquery-latest.js"></script>
+<script>
+    $(function () {
+        $('#btn-pay').click(function () {
+            $.ajax({
+                type:'POST',
+                url:'http://127.0.0.1:5000/car/paytest/',
+                data:{"id":{{ site.id }},"total":{{total}} },
+                dataType:'json',
+                success:function (e) {
+                    console.log('成功')
+                    console.log(e.re_url)
+                    window.location.href = e.re_url
+                    console.log(e)
+
+                }
+            })
+        })
+
+
+    })
+</script>
+
+{% endblock %}
